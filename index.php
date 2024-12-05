@@ -38,6 +38,8 @@
             <!-- Add Sort button -->
             <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="sortUsers()">Sort</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="exportToExcel()">Export to Excel</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-print" plain="true" onclick="printTable()">Print</a>
+
 
         </div>
     </div>
@@ -152,6 +154,81 @@
         function exportToExcel() {
     window.location.href = 'exportToExcel.php';
 }
+
+// Printtable functionality
+function printTable() {
+    // Get the DataGrid content
+    var rows = $('#dg').datagrid('getRows');
+    if (rows.length === 0) {
+        alert('No data available to print.');
+        return;
+    }
+
+    // Create a printable HTML structure
+    var printWindow = window.open('', '', 'width=900,height=600');
+    var printContent = `
+        <html>
+        <head>
+            <title>Print DataGrid</title>
+            <style>
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+                th, td {
+                    border: 1px solid black;
+                    text-align: left;
+                    padding: 8px;
+                }
+                th {
+                    background-color: #f2f2f2;
+                }
+                h2 {
+                    text-align: center;
+                }
+            </style>
+        </head>
+        <body>
+            <h2>Users Management</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+    // Populate table rows with DataGrid data
+    rows.forEach(row => {
+        printContent += `
+            <tr>
+                <td>${row.firstname}</td>
+                <td>${row.lastname}</td>
+                <td>${row.phone}</td>
+                <td>${row.email}</td>
+            </tr>
+        `;
+    });
+
+    printContent += `
+                </tbody>
+            </table>
+        </body>
+        </html>
+    `;
+
+    printWindow.document.write(printContent);
+    printWindow.document.close();
+
+    // Trigger the print dialog
+    printWindow.print();
+    printWindow.close();
+}
+
     </script>
 </body>
 </html>
