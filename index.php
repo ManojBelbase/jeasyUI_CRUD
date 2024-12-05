@@ -37,6 +37,8 @@
             <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyUser()">Remove User</a>
             <!-- Add Sort button -->
             <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="sortUsers()">Sort</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="exportToExcel()">Export to Excel</a>
+
         </div>
     </div>
 
@@ -145,6 +147,11 @@
                 order: sortOrder          // Sort order (ascending or descending)
             });
         }
+
+        // export to excel
+        function exportToExcel() {
+    window.location.href = 'exportToExcel.php';
+}
     </script>
 </body>
 </html>
